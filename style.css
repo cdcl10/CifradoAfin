@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Estilo para el encabezado */
+  header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Estilo para el título del encabezado */
+  header h1 {
+    margin: 0;
+  }
+  
+  /* Estilo para el contenido principal */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Estilo para los botones */
+  button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estilo para los botones al pasar el cursor por encima */
+  button:hover {
+    background-color: #555;
+  }
+  
+  /* Estilo para la tabla */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Estilo para la fila encabezado de la tabla */
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #333;
+    color: white;
+  }

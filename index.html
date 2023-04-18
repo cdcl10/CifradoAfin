@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Cifrado y Descifrado Afin</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Cifrado y Descifrado Afin</h1>
+    
+    <form>
+      <label for="mensaje">Mensaje:</label><br>
+      <textarea id="mensaje" name="mensaje" rows="4" cols="50"></textarea><br>
+      <label for="a">Clave A:</label><br>
+      <input type="number" id="a" name="a"><br>
+      <label for="b">Clave B:</label><br>
+      <input type="number" id="b" name="b"><br><br>
+      <button type="button" onclick="cifrar()">Cifrar</button>
+      <button type="button" onclick="descifrar()">Descifrar</button>
+
+    </form>
+    
+    <h2>Estadística de Frecuencia</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Letra</th>
+          <th>Frecuencia</th>
+          <th>Porcentaje</th>
+        </tr>
+      </thead>
+      <tbody id="frecuencia">
+      </tbody>
+    </table>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
