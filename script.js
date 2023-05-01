@@ -1,91 +1,173 @@
-
 function cifrar() {
-    const mensaje = document.getElementById("mensaje").value;
-const a = parseInt(document.getElementById("a").value);
-const b = parseInt(document.getElementById("b").value);
-const alfabeto = "abcdefghijklmnñopqrstuvwxyz";
+  // Obtenemos los valores ingresados por el usuario
+  const mensaje = document.getElementById("mensajeCifrar").value;
+  const a = parseInt(document.getElementById("aCifrar").value);
+  const b = parseInt(document.getElementById("bCifrar").value);
 
-let resultado = "";
-for (let i = 0; i < mensaje.length; i++) {
-      const letra = mensaje.charAt(i).toLowerCase();
-const codigo = alfabeto.indexOf(letra);
+  // Definimos el alfabeto español
+  const alfabeto = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
-if (codigo !== -1) {
-        const codigoCifrado = (a * codigo + b) % 27;
-const letraCifrada = alfabeto.charAt(codigoCifrado);
-resultado += letraCifrada;
-      } else {
-    resultado += letra;
-      }
-    }
-
-document.getElementById("mensaje").value = resultado;
-actualizarFrecuencia(resultado);
+  // Creamos un objeto para mapear cada letra del alfabeto a un índice
+  const mapeoLetras = {};
+  for (let i = 0; i < alfabeto.length; i++) {
+    mapeoLetras[alfabeto[i]] = i;
   }
 
-function descifrar() {
-    const mensaje = document.getElementById("mensaje").value;
-const a = parseInt(document.getElementById("a").value);
-const b = parseInt(document.getElementById("b").value);
-const a_inverso = obtenerInversoMultiplicativo(a);
-const alfabeto = "abcdefghijklmnñopqrstuvwxyz";
+  // Convertimos el mensaje a mayúsculas, eliminamos las tildes y lo separamos en caracteres
+  const mensajeLimpio = mensaje
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .split("");
 
-let resultado = "";
-for (let i = 0; i < mensaje.length; i++) {
-      const letra = mensaje.charAt(i).toLowerCase();
-const codigo = alfabeto.indexOf(letra);
+  // Creamos un array para guardar los caracteres cifrados
+  const resultado = [];
 
-if (codigo !== -1) {
-        const codigoDescifrado = a_inverso * (codigo - b + 27) % 27;
-const letraDescifrada = alfabeto.charAt(codigoDescifrado);
-resultado += letraDescifrada;
-      } else {
-    resultado += letra;
-      }
+  // Recorremos el mensaje
+  for (let i = 0; i < mensajeLimpio.length; i++) {
+    const letra = mensajeLimpio[i];
+    if (mapeoLetras.hasOwnProperty(letra)) { // Si la letra se encuentra en el alfabeto
+      const indiceLetra = mapeoLetras[letra];
+      const indiceCifrado = (a * indiceLetra + b) % 27; // Aplicamos la fórmula del cifrado afín
+      resultado.push(alfabeto[indiceCifrado]); // Agregamos el carácter cifrado al array resultado
     }
-
-document.getElementById("mensaje").value = resultado;
-actualizarFrecuencia(resultado);
   }
 
-function obtenerInversoMultiplicativo(a) {
-    for (let i = 1; i < 27; i++) {
-      if ((a * i) % 27 === 1) {
-return i;
+  // Mostramos el resultado cifrado en la página
+  document.getElementById("texto-cifrado").innerHTML = resultado.join("");
+
 }
+function inverso(a, m) {
+  for (let i = 0; i < m; i++) {
+    if ((a * i) % m === 1) {
+      return i;
+    }
+  }
+  return -1;
 }
-return 1;
-}
-function actualizarFrecuencia(mensaje) {
-const frecuencia = { };
-const regex = /[a-zá-ñ]/i; // Rango de letras a-z y á-ñ
-const mensajeLimpio = mensaje.replace(/\s/g, ''); // Eliminar espacios en blanco
-for (let i = 0; i < mensajeLimpio.length; i++) {
-  const letra = mensajeLimpio.charAt(i).toLowerCase();
-if (regex.test(letra)) {
-    if (frecuencia[letra]) {
-    frecuencia[letra]++;
+function encontrarB(S) {
+  const A = 0; // valor de A conocido
+  const n = 27; // módulo
+  let b = 0; // valor de b desconocido
+
+  b = ((S % 27) + 27) % 27;
+
+  return b ;
+  }
+
+function calcularFrecuencia() {
+  var mensajeCifrado = document.getElementById("texto-descifrado").value.toUpperCase();
+  var mensajeSinEspacios = mensajeCifrado.replace(/[^a-zA-Z]+/g, "");
+  var frecuencias = {};
+  for (var i = 0; i < mensajeSinEspacios.length; i++) {
+    var letra = mensajeSinEspacios[i];
+    if (frecuencias[letra]) {
+      frecuencias[letra]++;
     } else {
-    frecuencia[letra] = 1;
+      frecuencias[letra] = 1;
     }
   }
+  var letrasOrdenadas = Object.keys(frecuencias).sort(function(a, b) {
+    return frecuencias[b] - frecuencias[a];
+  });
+  var porcentajesFrecuencia = {};
+  for (var i = 0; i < letrasOrdenadas.length; i++) {
+    var letra = letrasOrdenadas[i];
+    var frecuencia = frecuencias[letra];
+    var porcentaje = (frecuencia / mensajeSinEspacios.length) * 100;
+    porcentajesFrecuencia[letra] = porcentaje.toFixed(2) + "%";
+  }
+  var estadisticas = "";
+  for (var i = 0; i < letrasOrdenadas.length; i++) {
+    var letra = letrasOrdenadas[i];
+    estadisticas += letra + ": " + porcentajesFrecuencia[letra] + "\n";
+  }
+  document.getElementById("estadisticas").value = estadisticas;
+  const alfabeto = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"; 
+  var letra1 = alfabeto.indexOf(letrasOrdenadas[0]);
+  var letra2 = alfabeto.indexOf(letrasOrdenadas[1]);
+  x = encontrarB(letra2);
+  y = (((letra1 - x) * 7 )% 27 + 27) % 27;
+  descifrar(y,x);
 }
+function calcularFrecuencia() {
+    
+  // Obtenemos el mensaje cifrado ingresado por el usuario
+  var mensajeCifrado = document.getElementById("texto-descifrado").value.toUpperCase();
+  var mensajeSinEspacios = mensajeCifrado.replace(/[^a-zA-Z]+/g, "");
 
-const tablaFrecuencia = document.getElementById("frecuencia");
-tablaFrecuencia.innerHTML = "";
-for (let letra in frecuencia) {
-const fila = document.createElement("tr");
-const columnaLetra = document.createElement("td");
-columnaLetra.innerHTML = letra;
-fila.appendChild(columnaLetra);
-const columnaFrecuencia = document.createElement("td");
-columnaFrecuencia.innerHTML = frecuencia[letra];
-fila.appendChild(columnaFrecuencia);
-const columnaPorcentaje = document.createElement("td");
-const porcentaje = (frecuencia[letra] / mensajeLimpio.length * 100).toFixed(2);
-columnaPorcentaje.innerHTML = porcentaje + "%";
-fila.appendChild(columnaPorcentaje);
-tablaFrecuencia.appendChild(fila);
+  // Creamos un objeto vacío para almacenar las frecuencias de cada letra
+  var frecuencias = {};
+
+  // Recorremos el mensaje cifrado y contamos la frecuencia de cada letra
+  for (var i = 0; i < mensajeSinEspacios.length; i++) {
+    var letra = mensajeSinEspacios[i];
+
+    // Si la letra ya está en el objeto de frecuencias, aumentamos su contador
+    if (frecuencias[letra]) {
+      frecuencias[letra]++;
+    }
+    // Si la letra no está en el objeto de frecuencias, la agregamos con un contador de 1
+    else {
+      frecuencias[letra] = 1;
+    }
+  }
+
+  // Ordenamos las letras por frecuencia de mayor a menor
+  var letrasOrdenadas = Object.keys(frecuencias).sort(function(a, b) {
+    return frecuencias[b] - frecuencias[a];
+  });
+
+  // Calculamos el porcentaje de frecuencia para cada letra y lo almacenamos en un nuevo objeto
+  var porcentajesFrecuencia = {};
+  for (var i = 0; i < letrasOrdenadas.length; i++) {
+    var letra = letrasOrdenadas[i];
+    var frecuencia = frecuencias[letra];
+    var porcentaje = (frecuencia / mensajeSinEspacios.length) * 100;
+    porcentajesFrecuencia[letra] = porcentaje.toFixed(2) + "%";
+
+    
+  }
+
+// Creamos una tabla con las estadísticas de frecuencia y la mostramos en el campo correspondiente
+var tabla = "<table><thead><tr><th>Letra</th><th>Frecuencia</th></tr></thead><tbody>";
+for (var i = 0; i < letrasOrdenadas.length; i++) {
+  var letra = letrasOrdenadas[i];
+  tabla += "<tr><td>" + letra + "</td><td>" + porcentajesFrecuencia[letra] + "</td></tr>";
 }
+tabla += "</tbody></table>";
+document.getElementById("estadisticas").innerHTML = tabla;
+// Centramos la tabla en la pantalla
+document.getElementById("estadisticas").style.margin = "auto";
 
+
+function descifrar(a,b) {
+  const alfabeto = "abcdefghijklmnñopqrstuvwxyz"; // alfabeto español
+  var mensajeCifrado = document.getElementById("texto-descifrado").value.toLowerCase();
+  let mensajeDescifrado = "";
+  // Calcular el inverso multiplicativo de a
+  let inverso = 0;
+  for (let i = 0; i < alfabeto.length; i++) {
+    const resto = (a * i) % alfabeto.length;
+    if (resto === 1) {
+      inverso = i;
+      break;
+    }
+  }
+  // Descifrar cada letra del mensaje cifrado utilizando la función afín inversa
+  for (let i = 0; i < mensajeCifrado.length; i++) {
+    const letra = mensajeCifrado.charAt(i);
+    const indice = alfabeto.indexOf(letra);
+    if (indice !== -1) { // si la letra está en el alfabeto
+      const indiceDescifrado = inverso * (indice - b + alfabeto.length) % alfabeto.length;
+      mensajeDescifrado += alfabeto.charAt(indiceDescifrado);
+    } else { // si la letra no está en el alfabeto
+      mensajeDescifrado += letra;
+    }
+  }
+  document.getElementById("parametros").innerHTML = "a = " + a + ", b = " + b;
+  // Mostrar el mensaje descifrado
+  document.getElementById("mensaje-descifrado").value = mensajeDescifrado.toUpperCase();
+
+  }
 }
