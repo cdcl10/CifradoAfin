@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Cifrado y Descifrado Afin</title>
+    <title>Cifrado y Descifrado  Afín</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Cifrado y Descifrado Afin</h1>
-    
+    <h1>Cifrado y Descifrado  Afín</h1>
+    <h2>Cifrado</h2>
     <form>
-      <label for="mensaje">Mensaje:</label><br>
-      <textarea id="mensaje" name="mensaje" rows="4" cols="50"></textarea><br>
-      <label for="a">Clave A:</label><br>
-      <input type="number" id="a" name="a"><br>
-      <label for="b">Clave B:</label><br>
-      <input type="number" id="b" name="b"><br><br>
-      <button type="button" onclick="cifrar()">Cifrar</button>
-      <button type="button" onclick="descifrar()">Descifrar</button>
-
+      <label for="mensajeCifrar">Escribe un Mensaje para cifrar :</label>
+      <input type="text" id="mensajeCifrar" name="mensajeCifrar"><br><br>
+      <label for="a">Valor de A :</label>
+      <input type="number" id="aCifrar" name="a" min="1" max="25"><br><br>
+      <label for="b">Valor de B :</label>
+      <input type="number" id="bCifrar" name="b" min="0" max="25"><br><br>
+      <button  type="button" onclick="cifrar()">CIFRAR</button>
+      <br><br>
+      <label for="texto-cifrado">Texto cifrado:</label>
+      <textarea id="texto-cifrado" name="texto-cifrado" rows="4" cols="50" readonly></textarea>
     </form>
+          <h2> Descifrado</h2>
+    <form>
+      <label for="texto-descifrado">Ingrese un Texto cifrado:</label>
+      <input type="text" id="texto-descifrado" name="texto-descifrado"><br><br>
+      <button type="button" onclick="calcularFrecuencia()">Descifrar</button>
+      <br><br>
+      <div id="parametros"></div>
+
+      <label for="mensaje-descifrado">Mensaje descifrado:</label>
+      <textarea id="mensaje-descifrado" name="mensaje-descifrado" rows="4" cols="50" readonly></textarea>
+    </form>
+    <h2>Estadísticas de Frecuencia</h2>
+    <div id="estadisticass">
+      <div class="caja">
+      </p>
     
-    <h2>Estadística de Frecuencia</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Letra</th>
-          <th>Frecuencia</th>
-          <th>Porcentaje</th>
-        </tr>
-      </thead>
-      <tbody id="frecuencia">
-      </tbody>
-    </table>
-    
+      <table id="estadisticas">
+
+
+
+        
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
